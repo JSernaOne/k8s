@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      imagePullSecrets:
+        - name: acr-auth
+      containers:
+        - name: mysql
+          image: acrinfrafinal.azurecr.io/mysql-custom:v1
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootpassword
+            - name: MYSQL_DATABASE
+              value: crud_db
+            - name: MYSQL_USER
+              value: crud_user
+            - name: MYSQL_PASSWORD
+              value: crud_password
+          ports:
+            - containerPort: 3306

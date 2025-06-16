@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: acrinfrafinal.azurecr.io/backend:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MYSQL_HOST
+              value: db
+            - name: MYSQL_USER
+              value: "crud_user"
+            - name: MYSQL_PASSWORD
+              value: "crud_password"
+            - name: MYSQL_DATABASE
+              value: "crud_db"
+            - name: PORT
+              value: "5000"
